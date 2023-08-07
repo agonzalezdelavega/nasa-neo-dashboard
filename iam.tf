@@ -30,6 +30,11 @@ resource "aws_iam_role_policy_attachment" "lambda-role-attachment" {
 data "template_file" "lambda_role_policy" {
   template = file("./templates/iam/lambda-role-policy.json.tpl")
   vars = {
-    bucket_name = aws_s3_bucket.app.id
+    region                 = data.aws_region.current.name,
+    account_id             = data.aws_caller_identity.current.account_id,
+    bucket_name            = aws_s3_bucket.app.id,
+    dynamodb_table         = aws_dynamodb_table.nasa-dart-neo.name,
+    api_key_parameter_name = "nasa-api-key",
+    log_group              = aws_cloudwatch_log_group.lambda_get-neo-data.name
   }
 }

@@ -3,6 +3,7 @@ import requests
 import logging
 import sys
 import os
+import time
 
 # ---- LOGGING CONFIGURATION --- #
 
@@ -60,11 +61,11 @@ def handler(event, context):
         table_data.append({
             "neo_id": object["id"],
             "name": object["name"],
-            "estimated_diameter_km_max": object["estimated_diameter"]["kilometers"]["estimated_diameter_max"],
-            "estimated_diameter_km_min": object["estimated_diameter"]["kilometers"]["estimated_diameter_min"],
-            "relative_velocity_kms": object["close_approach_data"][0]["relative_velocity"]["kilometers_per_second"],
-            "miss_distance_lunar": object["close_approach_data"][0]["miss_distance"]["astronomical"],
-            "miss_distance_astronomical": object["close_approach_data"][0]["miss_distance"]["astronomical"]
+            "estimated_diameter_km_max": round(object["estimated_diameter"]["kilometers"]["estimated_diameter_max"], 2),
+            "estimated_diameter_km_min": round(object["estimated_diameter"]["kilometers"]["estimated_diameter_min"], 2),
+            "relative_velocity_kms":round(float(object["close_approach_data"][0]["relative_velocity"]["kilometers_per_second"]), 2),
+            "miss_distance_lunar": round(float(object["close_approach_data"][0]["miss_distance"]["astronomical"]), 2),
+            "miss_distance_astronomical": round(float(object["close_approach_data"][0]["miss_distance"]["astronomical"]), 2)
         })
     
 # ---- UPLOAD DATA TO DYNAMODB ---- #
@@ -75,23 +76,29 @@ def handler(event, context):
                     "neo_id": {
                         "N": object["neo_id"]
                     },
+                    "date": {
+                        "S": event["date"]
+                    },
                     "name": {
                         "S": object["name"]
                     },
                     "estimated_diameter_km_max": {
-                        "N": object["estimated_diameter_km_max"]    
+                        "N": str(object["estimated_diameter_km_max"])
                     },
                     "estimated_diameter_km_min": {
-                        "N": object["estimated_diameter_km_min"]
+                        "N": str(object["estimated_diameter_km_min"])
                     },
                     "relative_velocity_kms": {
-                        "N": object["relative_velocity_kms"]
+                        "N": str(object["relative_velocity_kms"])
                     },
                     "miss_distance_lunar": {
-                        "N": object["miss_distance_lunar"]
+                        "N": str(object["miss_distance_lunar"])
                     },
                     "miss_distance_astronomical": {
-                        "N": object["miss_distance_astronomical"]
+                        "N": str(object["miss_distance_astronomical"])
+                    },
+                    "uploaded_on": {
+                        "N": time.time() + (24 * 60 * 60)
                     }
                 }
             }

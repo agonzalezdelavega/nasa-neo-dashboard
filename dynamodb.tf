@@ -14,4 +14,9 @@ resource "aws_dynamodb_table" "nasa-dart-neo" {
     name = "date"
     type = "S"
   }
+
+  ttl {
+    attribute_name = "uploaded_on"
+    enabled =  false
+  }
 }

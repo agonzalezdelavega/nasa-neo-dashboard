@@ -30,6 +30,16 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
   policy = data.template_file.bucket_policy.rendered
 }
 
+### Bucket Ownership
+
+resource "aws_s3_bucket_ownership_controls" "bucket_ownership" {
+  bucket = aws_s3_bucket.app.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
 ### Static website configuration
 
 resource "aws_s3_bucket_website_configuration" "website_config" {
