@@ -1,7 +1,9 @@
-### Lambda Role
+### Lambda Roles
 
-resource "aws_iam_role" "lambda" {
-  name = "${local.prefix}-lambda-role"
+### Put NEO data
+
+resource "aws_iam_role" "lambda-put-neo-data" {
+  name = "${local.prefix}-lambda-put-neo-data-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -17,24 +19,63 @@ resource "aws_iam_role" "lambda" {
   })
 }
 
-resource "aws_iam_policy" "lambda" {
-  name   = "${local.prefix}-lambda-policy"
-  policy = data.template_file.lambda_role_policy.rendered
+resource "aws_iam_policy" "lambda-put-neo-data-policy" {
+  name   = "${local.prefix}-lambda-put-neo-data-policy"
+  policy = data.template_file.lambda-put-neo-data-role-policy.rendered
 }
 
-resource "aws_iam_role_policy_attachment" "lambda-role-attachment" {
-  role       = aws_iam_role.lambda.name
-  policy_arn = aws_iam_policy.lambda.arn
+resource "aws_iam_role_policy_attachment" "lambda-put-neo-data-role-attachment" {
+  role       = aws_iam_role.lambda-put-neo-data.name
+  policy_arn = aws_iam_policy.lambda-put-neo-data-policy.arn
 }
 
-data "template_file" "lambda_role_policy" {
-  template = file("./templates/iam/lambda-role-policy.json.tpl")
+data "template_file" "lambda-put-neo-data-role-policy" {
+  template = file("./templates/iam/lambda-put-neo-data.json.tpl")
   vars = {
     region                 = data.aws_region.current.name,
     account_id             = data.aws_caller_identity.current.account_id,
     bucket_name            = aws_s3_bucket.app.id,
     dynamodb_table         = aws_dynamodb_table.nasa-dart-neo.name,
     api_key_parameter_name = "nasa-api-key",
-    log_group              = aws_cloudwatch_log_group.lambda_get-neo-data.name
+    log_group              = aws_cloudwatch_log_group.lambda-put-neo-data.name
+  }
+}
+
+### Get NEO data
+
+resource "aws_iam_role" "lambda-get-neo-data" {
+  name = "${local.prefix}-lambda-get-neo-data-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = "AssumeLambdaRole"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "lambda-get-neo-data-policy" {
+  name   = "${local.prefix}-lambda-get-neo-data-policy"
+  policy = data.template_file.lambda-get-neo-data-role-policy.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-get-neo-data-role-attachment" {
+  role       = aws_iam_role.lambda-get-neo-data.name
+  policy_arn = aws_iam_policy.lambda-get-neo-data-policy.arn
+}
+
+data "template_file" "lambda-get-neo-data-role-policy" {
+  template = file("./templates/iam/lambda-get-neo-data.json.tpl")
+  vars = {
+    region         = data.aws_region.current.name,
+    account_id     = data.aws_caller_identity.current.account_id,
+    dynamodb_table = aws_dynamodb_table.nasa-dart-neo.name,
+    log_group      = aws_cloudwatch_log_group.lambda-get-neo-data.name
   }
 }

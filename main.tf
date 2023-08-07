@@ -8,4 +8,6 @@ data "aws_caller_identity" "current" {}
 
 locals {
   prefix = "nasa-dart"
+
+  global_secondary_index = "SearchByDate"
 }
