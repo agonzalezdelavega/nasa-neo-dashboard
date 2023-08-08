@@ -4,6 +4,7 @@ import logging
 import sys
 import os
 import time
+from datetime import datetime as dt
 
 # ---- LOGGING CONFIGURATION --- #
 
@@ -39,7 +40,9 @@ URL = "https://api.nasa.gov/neo/rest/v1/feed?"
 def handler(event, context):
         
 # ---- RECEIVE AND PROCESS DATA FROM API ---- #
-
+    # Default to current date if no input is received
+    event["date"] = dt.today().strftime("%Y-%m-%d") if "date" not in event.keys() else event["date"]
+    
     params = {
         "api_key": API_KEY["Parameter"]["Value"],
         "start_date": event["date"],
@@ -52,8 +55,8 @@ def handler(event, context):
         logger.info("HTTP 200 response received, proceeding with database query")
     else:
         logger.error(f"API returned {response.status_code} error for requested date: {event['date']}")
-        logger.error(f"API error: {response['errorType']}")
-        
+        return
+            
     data = response.json()["near_earth_objects"]
 
     table_data = []

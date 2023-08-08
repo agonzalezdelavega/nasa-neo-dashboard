@@ -80,3 +80,41 @@ data "template_file" "lambda-get-neo-data-role-policy" {
     log_group      = aws_cloudwatch_log_group.lambda-get-neo-data.name
   }
 }
+
+### EventBridge
+
+resource "aws_iam_role" "eventbridge-schedule" {
+  name = "${local.prefix}-eventbridge-schedule"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = "AssumeLambdaRole"
+        Principal = {
+          Service = "scheduler.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "eventbridge-schedule-policy" {
+  name   = "${local.prefix}-eventbridge-schedule-policy"
+  policy = data.template_file.eventbridge-schedule-role-policy.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "eventbridge-schedule-role-attachment" {
+  role       = aws_iam_role.eventbridge-schedule.name
+  policy_arn = aws_iam_policy.eventbridge-schedule-policy.arn
+}
+
+data "template_file" "eventbridge-schedule-role-policy" {
+  template = file("./templates/iam/eventbridge-schedule.json.tpl")
+  vars = {
+    region         = data.aws_region.current.name,
+    account_id     = data.aws_caller_identity.current.account_id
+    function_name  = aws_lambda_function.put-neo-data.function_name
+  }
+}
