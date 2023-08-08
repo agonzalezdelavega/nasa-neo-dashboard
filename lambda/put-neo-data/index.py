@@ -7,7 +7,7 @@ import time
 
 # ---- LOGGING CONFIGURATION --- #
 
-logger = logging.getLogger("neos")
+logger = logging.getLogger("neo-put-data")
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler(stream=sys.stdout)
 ch.setLevel(logging.INFO)
@@ -22,7 +22,6 @@ try:
     api_client = boto3.client("apigatewaymanagementapi", region_name="us-east-2")
     ssm_client = boto3.client("ssm", region_name="us-east-2")
     dynamodb_client = boto3.client("dynamodb", region_name="us-east-2")
-    logger.info(" AWS SDK connection complete")
 except:
     logger.error("Could not connect to AWS SDK")
 
@@ -53,6 +52,7 @@ def handler(event, context):
         logger.info("HTTP 200 response received, proceeding with database query")
     else:
         logger.error(f"API returned {response.status_code} error for requested date: {event['date']}")
+        logger.error(f"API error: {response['errorType']}")
         
     data = response.json()["near_earth_objects"]
 
