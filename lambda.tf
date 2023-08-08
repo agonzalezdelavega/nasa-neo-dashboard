@@ -39,7 +39,11 @@ resource "aws_lambda_invocation" "invoke-put-neo-data" {
   })
   depends_on = [
     aws_lambda_function.get-neo-data,
-    aws_iam_role_policy_attachment.lambda-put-neo-data-role-attachment
+    aws_dynamodb_table.nasa-dart-neo,
+    aws_iam_role.lambda-put-neo-data,
+    aws_iam_policy.lambda-put-neo-data-policy,
+    aws_iam_role_policy_attachment.lambda-put-neo-data-role-attachment,
+
   ]
 }
 

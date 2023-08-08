@@ -45,6 +45,11 @@ resource "aws_api_gateway_integration" "get_integration" {
 }
 EOF
   }
+
+  depends_on = [ 
+    aws_api_gateway_method.neos-get
+  ]
+
 }
 
 resource "aws_api_gateway_integration_response" "get-integration-response" {
@@ -72,6 +77,11 @@ resource "aws_api_gateway_method_response" "get-response_200" {
   response_models = {
     "application/json" = aws_api_gateway_model.neos.name
   }
+
+  depends_on = [ 
+    aws_api_gateway_method.neos-get
+   ]
+
 }
 
 ### Enable CORS
@@ -98,6 +108,12 @@ resource "aws_api_gateway_model" "neos" {
 
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.api.id
+
+  depends_on = [ 
+    aws_api_gateway_method.neos-get,
+    aws_api_gateway_integration.get_integration,
+    aws_api_gateway_integration_response.get-integration-response
+   ]
 }
 
 resource "aws_api_gateway_stage" "api_deployment_stage" {
@@ -111,9 +127,14 @@ resource "aws_api_gateway_stage" "api_deployment_stage" {
 aws apigateway get-sdk --rest-api-id ${aws_api_gateway_rest_api.api.id} \
   --stage-name ${aws_api_gateway_stage.api_deployment_stage.stage_name} \
   --sdk-type javascript apiGateway-js-sdk.zip && \
-  unzip apiGateway-js-sdk.zip -d apiGateway-js-sdk
+  unzip -of apiGateway-js-sdk.zip -d apiGateway-js-sdk
 EOF
   }
+
+  depends_on = [
+    aws_api_gateway_deployment.deployment
+  ]
+
 }
 
 ### Lambda permissions
