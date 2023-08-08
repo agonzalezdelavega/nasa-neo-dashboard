@@ -19,10 +19,13 @@
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": [
-                "arn:aws:logs:${region}:${account_id}:log_group:${log_group}",
-                "arn:aws:logs:${region}:${account_id}:log_group:${log_group}:log-stream:*"
-            ]
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "invokeLambda",
+            "Effect": "Allow",
+            "Action": "lambda:InvokeFunction",
+            "Resource": "arn:aws:lambda:${region}:${account_id}:function:${function_name}"
         }
 	]
 }

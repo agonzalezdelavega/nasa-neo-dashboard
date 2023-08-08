@@ -94,7 +94,7 @@ resource "aws_api_gateway_model" "neos" {
   schema = file("./templates/models/neos.json")
 }
 
-# ### API Deployment
+### API Deployment
 
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.api.id
@@ -104,6 +104,16 @@ resource "aws_api_gateway_stage" "api_deployment_stage" {
   deployment_id = aws_api_gateway_deployment.deployment.id
   rest_api_id   = aws_api_gateway_rest_api.api.id
   stage_name    = "prod"
+
+  provisioner "local-exec" {
+    working_dir = "./site/"
+    command = <<-EOF
+aws apigateway get-sdk --rest-api-id ${aws_api_gateway_rest_api.api.id} \
+  --stage-name ${aws_api_gateway_stage.api_deployment_stage.stage_name} \
+  --sdk-type javascript apiGateway-js-sdk.zip && \
+  unzip apiGateway-js-sdk.zip -d apiGateway-js-sdk
+EOF
+  }
 }
 
 ### Lambda permissions
@@ -115,14 +125,3 @@ resource "aws_lambda_permission" "lambda_permission" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*"
 }
-
-
-### CORS Options
-# ✔ Create OPTIONS method
-# ✔ Add 200 Method Response with Empty Response Model to OPTIONS method
-# ✔ Add Mock Integration to OPTIONS method
-# ✔ Add 200 Integration Response to OPTIONS method
-# ✔ Add Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin Method Response Headers to OPTIONS method
-# ✔ Add Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin Integration Response Header Mappings to OPTIONS method
-# ✔ Add Access-Control-Allow-Origin Method Response Header to GET method
-# ✔ Add Access-Control-Allow-Origin Integration Response Header Mapping to GET method
