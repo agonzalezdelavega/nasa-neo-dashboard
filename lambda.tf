@@ -20,14 +20,14 @@ resource "aws_lambda_function" "put-neo-data" {
 }
 
 data "archive_file" "put-neo-data-function-code" {
-  type = "zip"
+  type        = "zip"
   source_file = "./lambda/put-neo-data/index.py"
   output_path = "./lambda/put-neo-data.zip"
 }
 
 resource "aws_lambda_layer_version" "put-neo-data" {
-  filename   = "./lambda/layers/put-neo-data/put-neo-data.zip"
-  layer_name = "put-neo-data"
+  filename            = "./lambda/layers/put-neo-data/put-neo-data.zip"
+  layer_name          = "put-neo-data"
   compatible_runtimes = ["python3.9"]
 }
 
@@ -62,7 +62,7 @@ resource "aws_lambda_function" "get-neo-data" {
 }
 
 data "archive_file" "get-neo-data-function-code" {
-  type = "zip"
+  type        = "zip"
   source_file = "./lambda/get-neo-data/index.py"
   output_path = "./lambda/get-neo-data.zip"
 }

@@ -1,0 +1,35 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "neo_id": {
+        "type": "number"
+      },
+      "close_approach_date": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string" 
+      },
+      "estimated_diameter_km_max": {
+        "type": "number"
+      },
+      "estimated_diameter_km_min": {
+        "type": "number"
+      },
+      "relative_velocity_kms": {
+        "type": "number"
+      },
+      "miss_distance_lunar": {
+        "type": "number"
+      },
+      "miss_distance_astronomical": {
+        "type": "number"
+      },
+      "uploaded_on": {
+        "type": "number"
+      }
+    }
+  }
+}
