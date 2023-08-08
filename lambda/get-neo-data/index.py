@@ -14,7 +14,6 @@ def handler(event, context):
             "S": event["date"],
         }
         },
-        KeyConditionExpression="close_approach_date = :date",
+        KeyConditionExpression="close_approachdate = :date",
     )
-    print(response)
     return response

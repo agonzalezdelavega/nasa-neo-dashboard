@@ -5,3 +5,6 @@
 # Lambda
 lambda/layers/*/python
 lambda/*.zip
+
+# API SDK
+**apiGateway-js-sdk*
