@@ -1,0 +1,37 @@
+:root {
+    background-color: #000000;
+    --font-color: #ffffff;
+    color: var(--font-color);
+    font-family: sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1vw;
+    margin: 0.5%;
+}
+
+main {
+    margin: 2%;
+}
+
+.ref-link {
+    color: #6098ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.site-button {
+    color: var(--font-color);
+    background-color: #1163fc;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 1.5vh 0.5vw 1.5vh 0.5vw;
+    width: 12%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

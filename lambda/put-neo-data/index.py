@@ -64,15 +64,15 @@ def handler(event, context):
         table_data.append({
             "neo_id": object["id"],
             "name": object["name"],
-            "estimated_diameter_km_max": round(object["estimated_diameter"]["kilometers"]["estimated_diameter_max"], 2),
-            "estimated_diameter_km_min": round(object["estimated_diameter"]["kilometers"]["estimated_diameter_min"], 2),
-            "relative_velocity_kms":round(float(object["close_approach_data"][0]["relative_velocity"]["kilometers_per_second"]), 2),
+            "estimated_diameter_feet_max": round(object["estimated_diameter"]["feet"]["estimated_diameter_max"], 2),
+            "estimated_diameter_feet_min": round(object["estimated_diameter"]["feet"]["estimated_diameter_min"], 2),
+            "relative_velocity_mph":round(float(object["close_approach_data"][0]["relative_velocity"]["miles_per_hour"]), 2),
             "miss_distance_lunar": round(float(object["close_approach_data"][0]["miss_distance"]["astronomical"]), 2),
             "miss_distance_astronomical": round(float(object["close_approach_data"][0]["miss_distance"]["astronomical"]), 2)
         })
     
 # ---- UPLOAD DATA TO DYNAMODB ---- #
-    for date in data.keys():
+    for date in data.keys():    
         put_operations = [{
             "PutRequest": {
                 "Item": {
@@ -85,14 +85,14 @@ def handler(event, context):
                     "name": {
                         "S": object["name"]
                     },
-                    "estimated_diameter_km_max": {
-                        "N": str(object["estimated_diameter_km_max"])
+                    "estimated_diameter_feet_max": {
+                        "N": str(object["estimated_diameter_feet_max"])
                     },
-                    "estimated_diameter_km_min": {
-                        "N": str(object["estimated_diameter_km_min"])
+                    "estimated_diameter_feet_min": {
+                        "N": str(object["estimated_diameter_feet_min"])
                     },
-                    "relative_velocity_kms": {
-                        "N": str(object["relative_velocity_kms"])
+                    "relative_velocity_mph": {
+                        "N": str(object["relative_velocity_mph"])
                     },
                     "miss_distance_lunar": {
                         "N": str(object["miss_distance_lunar"])
