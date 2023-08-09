@@ -1,34 +1,22 @@
 $(document).ready(function () {    
     var apigClient = apigClientFactory.newClient();
 
-    $("main").append('<p class="site-button">Welcome to the dashboard</p>');
+    var date = location.search.slice(6, 16);
 
-    var lookupdate = location.search.slice(6, 16);
-
-    $("a").click(function(event) {
-        $(this).append(`<p>${lookupdate}</p>`);
-    });
-
-    var params = {
-        date: lookupdate
-    };
-
-    window.loadData = function () {
-        var lookupdate = location.search.slice(6, 16);
-        apigClient.dashboardDateGet({date: lookupdate}, null, {})
+    loadData = function () {
+        apigClient.dashboardDateGet({date: date}, null, {})
         .then(function(result) {
-            $("main").append(`<p>${result.data.Items[0].neo_id.N}</p>`);
-            $("main").append(`<p>${result.data.Items[0].name.S}</p>`);
-            $("main").append(`<p>${result.data.Items[0].relative_velocity_mph.N}</p>`);
-            $("main").append(`<p>${result.data.Items[0].miss_distance_lunar.N}</p>`);
-            $("main").append(`<p>${Object.keys(result.data.Items[0])}</p>`);
-            $("main").append(`<p>${Object.keys(result.data.Items[0])}</p>`);
-            $("main").append(`<p>${Object.keys(result.data.Items[0])}</p>`);
-            $("main").append(`<p>${Object.keys(result.data.Items[0])}</p>`);
-            $("main").append(`<p>${result.text}</p>`);
-            $("main").append(`<p>${result.statusText}</p>`);
-            // $("main").append(`<p>${Object.keys(result)}</p>`);
-            // miss_distance_lunar,estimated_diameter_feet_max,uploaded_on,relative_velocity_mph,close_approach_date,estimated_diameter_feet_min,name,neo_id,miss_distance_astronomical
+            neo_data = result.data.Items;
+            neo_data.forEach((neo) => {
+                $('tbody').append(`<tr class="neo_table_row" id="${neo.neo_id.N}">`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.neo_id.N}</td>`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.name.S}</td>`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.estimated_diameter_feet_min.N} - ${neo.estimated_diameter_feet_max.N}</td>`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.miss_distance_astronomical.N}</td>`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.miss_distance_lunar.N}</td>`);
+                $(`#${neo.neo_id.N}`).append(`<td>${neo.relative_velocity_mph.N}</td>`);
+                $('tbody').append('</tr>');
+            });
         });
     };
 

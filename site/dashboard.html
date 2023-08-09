@@ -10,10 +10,26 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <nav>
+        <a href="/index.html" class="home-button"><span class="material-symbols-outlined">public</span></a>
+        <form action="/dashboard.html" class="date-search">
+            <label for="date">Browse by date:</label>
+            <input type="date" name="date" id="date" required>
+            <button type="submit" class="search-button"><span class="material-symbols-outlined">search</span></button>
+        </form>
+    </nav>
     <main>
-        <a>Add text here</a>
-        <a href="#" onclick="loadData()">Load data</a>
-        <table class="neo-table">
+        <table class="neo_table">
+            <thead>
+                <tr>
+                    <th scope="col">NEO ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Estimated Diameter (ft)</th>
+                    <th scope="col">Miss Distance (AU)</th>
+                    <th scope="col">Miss Distance (LD)</th>
+                    <th scope="col">Relative Velocity (MPH)</th>
+                </tr>
+            </thead>
             <tbody>
                 &nbsp;
             </tbody>
@@ -34,7 +50,7 @@
 <script src="js/site.js"></script>
 <script type="text/javascript">
     $(function () {
-        window.loadData();
+        loadData();
     });
 </script>
 </body>
