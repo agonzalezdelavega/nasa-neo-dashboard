@@ -1,5 +1,5 @@
 :root {
-    background-color: #000000;
+    background-color: #1a1a1a;
     --font-color: #ffffff;
     color: var(--font-color);
     font-family: sans-serif;
@@ -25,8 +25,8 @@ nav {
 .date-search {
     display: flex;
     align-items: center;
-    gap: 4%;
-    width: 30%
+    gap: 2%;
+    width: 50%
 }
 
 .search-button {
@@ -45,15 +45,32 @@ main {
     font-weight: bold;
 }
 
-.site-button {
+.welcome-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin: 30px 0 0 4vw;
+}
+
+.welcome-menu-button {
     color: var(--font-color);
-    background-color: #1163fc;
+    background-color: #1177fc5b;
     text-decoration: none;
+    font-size: 12px;
     font-weight: bold;
-    padding: 1.5vh 0.5vw 1.5vh 0.5vw;
-    width: 12%;
+    margin-top: 20px;
+    padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+    min-width: 12%;
+    max-width: 20%;
     border-radius: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+}
+
+.view-dashboard {
+    font-size: 15px;
+    padding: 1.1rem;
+    background-color: #003597;
+    justify-content: space-evenly;
 }
