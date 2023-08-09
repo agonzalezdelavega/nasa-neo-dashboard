@@ -37,7 +37,7 @@ resource "aws_api_gateway_integration" "neo-dashboard-get-integration" {
   integration_http_method = "POST"
   type                    = "AWS"
   uri                     = aws_lambda_function.get-neo-data.invoke_arn
-  passthrough_behavior    = "WHEN_NO_TEMPLATES"
+  passthrough_behavior    = "WHEN_NO_MATCH"
 
   depends_on = [
     aws_api_gateway_method.neo-dashboard-get
@@ -77,7 +77,6 @@ resource "aws_api_gateway_method_response" "neo-dashboard-get-response_200" {
 
 }
 
-
 ## {date} resource
 
 resource "aws_api_gateway_method" "neos-get" {
@@ -85,6 +84,11 @@ resource "aws_api_gateway_method" "neos-get" {
   resource_id   = aws_api_gateway_resource.neos.id
   http_method   = "GET"
   authorization = "NONE"
+
+  request_parameters = {
+    "method.request.path.date" = true
+  }
+
 }
 
 resource "aws_api_gateway_integration" "neos-get-integration" {

@@ -27,7 +27,7 @@ except:
 def handler(event, context):
 # ---- LOAD DATA FROM DYNAMODB ---- #
     # Use current date as default if no date argument is passed
-    event["date"] = dt.today().strftime("%Y-%m-%d") if "date" not in event.keys() else event["date"]
+    event["date"] = dt.today().strftime("%Y-%m-%d") if event["date"] == "" else event["date"]
     
     # Extract date from DynamoDB table
     logger.info(f"Loading data from DynamoDB table for date: {event['date']}")
