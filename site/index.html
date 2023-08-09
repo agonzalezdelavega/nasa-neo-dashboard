@@ -19,12 +19,22 @@
         </form>
     </nav>
     <main>
-        <h1>Welcome to my NEO Dashboard!</h1>
-        <p>Using data from NASA's Near Earth Object Web Service, we can track and visualize data on asteroids nearing our planet.</p>
-        <p>This information was retrieved using <a class="ref-link" href="https://api.nasa.gov/" target="_blank">NASA's NeoWS API</a>, which is maintained by the <a class="ref-link" href="https://github.com/SpaceRocks/" target="_blank">SpaceRocks Team</a></p>
-        <a class="site-button" href="dashboard.html">
-                View Dashboard<span class="material-symbols-outlined">arrow_forward</span>
-        </a>
+        <div>
+            <h1>Welcome to my NEO Dashboard!</h1>
+            <p>Using data from NASA's Near Earth Object Web Service, we can track and visualize data on asteroids nearing our planet.</p>
+            <p>This information was retrieved using <a class="ref-link" href="https://api.nasa.gov/" target="_blank">NASA's NeoWS API</a>, which is maintained by the <a class="ref-link" href="https://github.com/SpaceRocks/" target="_blank">SpaceRocks Team</a></p>
+        </div>
+        <div class="welcome-menu">
+            <a class="welcome-menu-button view-dashboard" href="dashboard.html">
+                <p>View Dashboard</p><span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+            <a class="welcome-menu-button" href="https://www.nasa.gov/planetarydefense/overview" target="_blank">
+                <p>NASA Planetary Defense Website</p>
+            </a>
+            <a class="welcome-menu-button" href="https://www.nasa.gov/planetarydefense/dart/dart-news" target="_blank">
+                <p>View Updates from DART</p>
+            </a>                
+        </div>
     </main>
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
