@@ -31,22 +31,6 @@ resource "aws_lambda_layer_version" "put-neo-data" {
   compatible_runtimes = ["python3.9"]
 }
 
-resource "aws_lambda_invocation" "invoke-put-neo-data" {
-  function_name = aws_lambda_function.put-neo-data.function_name
-
-  input = jsonencode({
-    date = formatdate("YYYY-MM-DD", timestamp())
-  })
-  depends_on = [
-    aws_lambda_function.get-neo-data,
-    aws_dynamodb_table.nasa-dart-neo,
-    aws_iam_role.lambda-put-neo-data,
-    aws_iam_policy.lambda-put-neo-data-policy,
-    aws_iam_role_policy_attachment.lambda-put-neo-data-role-attachment,
-
-  ]
-}
-
 ### Get NEO data
 
 resource "aws_lambda_function" "get-neo-data" {
