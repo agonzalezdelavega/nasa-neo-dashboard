@@ -9,17 +9,39 @@ nav {
     display: flex;
     justify-content: left;
     align-items: center;
-    gap: 1vw;
-    margin: 0.5%;
+    --navbar-color: #40595e;
+    background-color: var(--navbar-color);
+    width: 100%;
+    padding: 1rem 0 1rem 0;
+    gap: 2vw;
+}
+
+.home-button {
+    text-decoration: none;
+    color: var(--font-color);
+    margin: 0 0.3rem 0 1.5rem;
+}
+
+.date-search {
+    display: flex;
+    align-items: center;
+    gap: 4%;
+    width: 30%
+}
+
+.search-button {
+    color: var(--font-color);
+    border: none;
+    background-color: transparent;
 }
 
 main {
+    position: relative;
     margin: 2%;
 }
 
 .ref-link {
     color: #6098ff;
-    text-decoration: none;
     font-weight: bold;
 }
 

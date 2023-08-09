@@ -40,8 +40,8 @@ URL = "https://api.nasa.gov/neo/rest/v1/feed?"
 def handler(event, context):
         
 # ---- RECEIVE AND PROCESS DATA FROM API ---- #
-    # Default to current date if no input is received
-    event["date"] = dt.today().strftime("%Y-%m-%d") if "date" not in event.keys() else event["date"]
+    # Use current date as default if no date argument is passed
+    event["date"] = dt.today().strftime("%Y-%m-%d") if event["date"] == "" else event["date"]
     
     params = {
         "api_key": API_KEY["Parameter"]["Value"],
