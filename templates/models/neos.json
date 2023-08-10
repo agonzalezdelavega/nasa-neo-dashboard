@@ -12,13 +12,13 @@
       "name": {
         "type": "string" 
       },
-      "estimated_diameter_km_max": {
+      "estimated_diameter_ft_max": {
         "type": "number"
       },
-      "estimated_diameter_km_min": {
+      "estimated_diameter_ft_min": {
         "type": "number"
       },
-      "relative_velocity_kms": {
+      "relative_velocity_mph": {
         "type": "number"
       },
       "miss_distance_lunar": {

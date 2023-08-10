@@ -6,35 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <title>Dashboard</title>
 </head>
 <body>
-    <nav>
-        <a href="/index.html" class="home-button"><span class="material-symbols-outlined">public</span></a>
-        <form action="/dashboard.html" class="date-search">
-            <label for="date">Browse by date:</label>
-            <input type="date" name="date" id="date" required>
-            <button type="submit" class="search-button"><span class="material-symbols-outlined">search</span></button>
-        </form>
-    </nav>
-    <main>
-        <table class="neo_table">
-            <thead>
-                <tr>
-                    <th scope="col">NEO ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Estimated Diameter (ft)</th>
-                    <th scope="col">Miss Distance (AU)</th>
-                    <th scope="col">Miss Distance (LD)</th>
-                    <th scope="col">Relative Velocity (MPH)</th>
-                </tr>
-            </thead>
-            <tbody>
-                &nbsp;
-            </tbody>
-        </table>
-    </main>
+<nav>
+    <a href="index.html" class="home-button"><span class="material-symbols-outlined">public</span></a>
+    <form action="dashboard.html" class="date-search">
+        <label for="date">Browse by date:</label>
+        <input type="date" name="date" id="date" required>
+        <button type="submit" class="search-button"><span class="material-symbols-outlined">search</span></button>
+    </form>
+</nav>
+<main>
+<div class="dashboard">
+<div class="summary">
+    <div class="summary-header">
+        <h1 id="summary-title">NEO Overview for </h1>
+        <div id="summary-neo-count">
+            &nbsp;
+        </div>
+    </div>
+</div>
+
+<div class="loading">
+    <span class="material-symbols-outlined">schedule</span>
+    <h2>Loading NEO data...</h2>
+</div>
+
+<div class="largest-neo-info">
+    <p id="largest-neo-title">Largest Near Earth Object</p>
+
+</div>
+
+<table class="neo-table">
+    <thead>
+        <tr>
+            <th scope="col">NEO ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Estimated Diameter Range(ft)</th>
+            <th scope="col">Miss Distance (AU)</th>
+            <th scope="col">Miss Distance (LD)</th>
+            <th scope="col">Relative Velocity (MPH)</th>
+        </tr>
+    </thead>
+    <tbody id="neo-table-body">
+        &nbsp;
+    </tbody>
+</table>
+</div>
+</main>
 <script src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
 <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
