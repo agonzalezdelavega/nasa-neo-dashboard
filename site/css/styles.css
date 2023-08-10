@@ -1,8 +1,6 @@
 :root {
-    background-color: #1a1a1a;
-    --font-color: #ffffff;
-    
-    color: var(--font-color);
+    background-color: #efefff;
+    color: #000000;
     font-family: sans-serif;
 }
 
@@ -10,9 +8,10 @@ nav {
     display: flex;
     justify-content: left;
     align-items: center;
-    background-color: #2f575f;;
+    color: #ffffff;
+    background-color: #2d2a4b;;
     width: 100%;
-    padding: 1rem 0 1rem 0;
+    padding: 1rem 0 1.8rem 0;
     gap: 2vw;
 }
 
@@ -54,8 +53,8 @@ main {
 }
 
 .welcome-menu-button {
-    color: var(--font-color);
-    background-color: #1177fc5b;
+    color: #ffffff;
+    background-color: #1175f8;
     text-decoration: none;
     font-size: 12px;
     font-weight: bold;
@@ -72,6 +71,6 @@ main {
 .view-dashboard {
     font-size: 15px;
     padding: 1.1rem;
-    background-color: #003597;
+    background-color: #002d81;
     justify-content: space-evenly;
 }

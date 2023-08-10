@@ -35,7 +35,7 @@ data "template_file" "lambda-put-neo-data-role-policy" {
     region                 = data.aws_region.current.name,
     account_id             = data.aws_caller_identity.current.account_id,
     bucket_name            = aws_s3_bucket.app.id,
-    dynamodb_table         = aws_dynamodb_table.nasa-dart-neo.name,
+    dynamodb_table         = aws_dynamodb_table.nasa-neo.name,
     api_key_parameter_name = "nasa-api-key",
     log_group              = aws_cloudwatch_log_group.lambda-put-neo-data.name
   }
@@ -75,7 +75,7 @@ data "template_file" "lambda-get-neo-data-role-policy" {
   vars = {
     region         = data.aws_region.current.name,
     account_id     = data.aws_caller_identity.current.account_id,
-    dynamodb_table = aws_dynamodb_table.nasa-dart-neo.name,
+    dynamodb_table = aws_dynamodb_table.nasa-neo.name,
     function_name  = aws_lambda_function.put-neo-data.function_name,
     log_group      = aws_cloudwatch_log_group.lambda-get-neo-data.name
   }

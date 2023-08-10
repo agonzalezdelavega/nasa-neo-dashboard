@@ -12,7 +12,7 @@ resource "aws_lambda_function" "put-neo-data" {
   environment {
     variables = {
       BUCKET_NAME          = aws_s3_bucket.app.id
-      DYNAMO_DB_TABLE_NAME = aws_dynamodb_table.nasa-dart-neo.name
+      DYNAMO_DB_TABLE_NAME = aws_dynamodb_table.nasa-neo.name
     }
   }
 }
@@ -43,7 +43,7 @@ resource "aws_lambda_function" "get-neo-data" {
   environment {
     variables = {
       BUCKET_NAME            = aws_s3_bucket.app.id,
-      DYNAMO_DB_TABLE_NAME   = aws_dynamodb_table.nasa-dart-neo.name,
+      DYNAMO_DB_TABLE_NAME   = aws_dynamodb_table.nasa-neo.name,
       GLOBAL_SECONDARY_INDEX = local.global_secondary_index,
       LAMBDA_FUNCTION_PUT    = aws_lambda_function.put-neo-data.function_name
     }
