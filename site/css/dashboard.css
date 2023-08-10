@@ -1,0 +1,86 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.invalid-date-error {
+    margin: 5%;
+}
+
+.summary {
+    width: 90%;
+    padding: 0 3% 0 0;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#summary-title {
+    font-size: 2.8rem;
+}
+
+#neo-count {
+    display: flex;
+    justify-content: center;
+    font-size: 3.4rem;
+    margin: 0;
+    padding: 0;
+}
+
+.largest-neo-info {
+    display: grid;
+    width: 70%;
+    grid-template-columns: 25% 40% 25%;
+    grid-template-rows: 4rem 3rem 5rem;
+    font-weight: bold;
+    text-align: center;
+    gap: 0;
+    margin: 3% 0;
+}
+
+.largest-neo-info * {
+    border: 1px solid #555555;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#largest-neo-title {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background-color: #1177fc5b;
+    border: 2px #1177fc5b;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.largest-neo-label {
+    font-size: 0.9rem;
+}
+
+.largest-neo-data {
+    font-size: 1.6rem;
+}
+
+#largest-neo-bottom-left {
+    border-bottom-left-radius: 25px;
+}
+
+#largest-neo-bottom-right {
+    border-bottom-right-radius: 25px;
+}

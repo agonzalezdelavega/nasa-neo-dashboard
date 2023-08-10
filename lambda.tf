@@ -6,10 +6,8 @@ resource "aws_lambda_function" "put-neo-data" {
   role          = aws_iam_role.lambda-put-neo-data.arn
   handler       = "index.handler"
   runtime       = "python3.9"
-
-  layers = [aws_lambda_layer_version.put-neo-data.arn]
-
-  timeout = 10
+  layers        = [aws_lambda_layer_version.put-neo-data.arn]
+  timeout       = 10
 
   environment {
     variables = {
@@ -39,6 +37,8 @@ resource "aws_lambda_function" "get-neo-data" {
   role          = aws_iam_role.lambda-get-neo-data.arn
   handler       = "index.handler"
   runtime       = "python3.9"
+  layers        = [aws_lambda_layer_version.get-neo-data.arn]
+  timeout       = 10
 
   environment {
     variables = {
@@ -54,4 +54,10 @@ data "archive_file" "get-neo-data-function-code" {
   type        = "zip"
   source_file = "./lambda/get-neo-data/index.py"
   output_path = "./lambda/get-neo-data.zip"
+}
+
+resource "aws_lambda_layer_version" "get-neo-data" {
+  filename            = "./lambda/layers/get-neo-data/get-neo-data.zip"
+  layer_name          = "get-neo-data"
+  compatible_runtimes = ["python3.9"]
 }

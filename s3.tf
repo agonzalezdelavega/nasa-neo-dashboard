@@ -3,13 +3,13 @@ resource "aws_s3_bucket" "app" {
 }
 
 resource "random_integer" "bucket_suffix" {
-  min = 100000
-  max = 999999
+  min = 10000000
+  max = 99999999
 }
 
 ### Bucket access
 
-resource "aws_s3_bucket_public_access_block" "allow_spublic_access" {
+resource "aws_s3_bucket_public_access_block" "allow_public_access" {
   bucket = aws_s3_bucket.app.id
 
   block_public_acls       = false
@@ -28,6 +28,13 @@ data "template_file" "bucket_policy" {
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.app.id
   policy = data.template_file.bucket_policy.rendered
+
+  depends_on = [
+    aws_s3_bucket.app,
+    aws_s3_bucket_public_access_block.allow_public_access,
+    aws_s3_bucket_ownership_controls.bucket_ownership
+  ]
+
 }
 
 ### Bucket Ownership

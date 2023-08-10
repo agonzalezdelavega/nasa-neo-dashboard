@@ -152,7 +152,7 @@ resource "aws_api_gateway_method_response" "neosget-response_200" {
 module "cors" {
   for_each = {
     neo_dashboard = aws_api_gateway_resource.neo-dashboard.id
-    neos = aws_api_gateway_resource.neos.id
+    neos          = aws_api_gateway_resource.neos.id
   }
 
   source  = "squidfunk/api-gateway-enable-cors/aws"
@@ -167,7 +167,7 @@ module "cors" {
     aws_api_gateway_resource.neos,
     aws_api_gateway_method.neos-get,
     aws_api_gateway_method.neo-dashboard-get
-   ]
+  ]
 
 }
 

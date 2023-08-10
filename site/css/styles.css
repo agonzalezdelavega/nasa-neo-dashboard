@@ -1,6 +1,7 @@
 :root {
     background-color: #1a1a1a;
     --font-color: #ffffff;
+    
     color: var(--font-color);
     font-family: sans-serif;
 }
@@ -9,8 +10,7 @@ nav {
     display: flex;
     justify-content: left;
     align-items: center;
-    --navbar-color: #40595e;
-    background-color: var(--navbar-color);
+    background-color: #2f575f;;
     width: 100%;
     padding: 1rem 0 1rem 0;
     gap: 2vw;
@@ -38,6 +38,7 @@ nav {
 main {
     position: relative;
     margin: 2%;
+    width: 96%;
 }
 
 .ref-link {
