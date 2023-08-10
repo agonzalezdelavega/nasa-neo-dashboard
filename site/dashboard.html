@@ -19,20 +19,19 @@
         <button type="submit" class="search-button"><span class="material-symbols-outlined">search</span></button>
     </form>
 </nav>
+<div class="loading">
+    <span class="material-symbols-outlined">schedule</span>
+    <h2>Loading NEO data...</h2>
+</div>
 <main>
 <div class="dashboard">
 <div class="summary">
     <div class="summary-header">
-        <h1 id="summary-title">NEO Overview for </h1>
-        <div id="summary-neo-count">
-            &nbsp;
+        <h1 class="summary-title">NEO Overview for </h1>
+        <div class="summary-neo-count">
+
         </div>
     </div>
-</div>
-
-<div class="loading">
-    <span class="material-symbols-outlined">schedule</span>
-    <h2>Loading NEO data...</h2>
 </div>
 
 <div class="largest-neo-info">
@@ -40,19 +39,25 @@
 
 </div>
 
+<div class="neo-miss-distance">
+    <p id="neo-miss-distance-title">Average Miss Distance</p>
+    <div class="neo-miss-distance-label"><span class="material-symbols-outlined">sunny</span><p>Astronomical Units</p><p title="One astronomical unit is equal to the distance from the Earth to the Sun, or 9.295581e+7 miles.">&#9432;</p></div>
+    <div class="neo-miss-distance-label"><span class="material-symbols-outlined">dark_mode</span><p>Lunar Distance</p><p title="One lunar distance unit is equal to the distance from the center of the Earth to the center of the Moon, or 238,854 miles.">&#9432;</p></div>
+</div>
+
 <table class="neo-table">
     <thead>
-        <tr>
+        <tr class="neo-table-headings">
             <th scope="col">NEO ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Estimated Diameter Range(ft)</th>
-            <th scope="col">Miss Distance (AU)</th>
-            <th scope="col">Miss Distance (LD)</th>
-            <th scope="col">Relative Velocity (MPH)</th>
+            <th scope="col">Estimated Diameter Range<br>(ft)</th>
+            <th scope="col">Miss Distance<br>(AU)</th>
+            <th scope="col">Miss Distance<br>(LD)</th>
+            <th scope="col">Relative Velocity<br>(MPH)</th>
         </tr>
     </thead>
     <tbody id="neo-table-body">
-        &nbsp;
+
     </tbody>
 </table>
 </div>

@@ -7,7 +7,7 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 locals {
-  prefix = "nasa-dart"
+  prefix = "nasa-neo"
 
   global_secondary_index = "SearchByDate"
 }

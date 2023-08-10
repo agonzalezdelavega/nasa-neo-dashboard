@@ -44,13 +44,19 @@ def handler(event, context):
         )
         neo_data = get_neo_data(date=event['date'])
             
-# ---- GET MAX VALUE FOR LARGEST ESTIMATED DIAMETER ---- #
     df = pd.DataFrame(neo_data["Items"])
+# ---- GET MAX VALUE FOR LARGEST ESTIMATED DIAMETER ---- #
     df['name'] = [df['name'][i]['S'] for i in range(0, df.shape[0])]
     df['estimated_diameter_feet_max'] = [float(df['estimated_diameter_feet_max'][i]['N']) for i in range(0, df.shape[0])]
     df['relative_velocity_mph'] = [float(df['relative_velocity_mph'][i]['N']) for i in range(0, df.shape[0])]
     largest_neo = df[['name', 'estimated_diameter_feet_max', 'relative_velocity_mph']].iloc[[df['estimated_diameter_feet_max'].idxmax()]]
     neo_data['largest_neo'] = largest_neo.to_dict(orient='split', index=False)
+    
+# ---- GET AVERAGE MISS DISTANCES ---- #
+    df['miss_distance_lunar'] = [float(df['miss_distance_lunar'][i]['N']) for i in range(0, df.shape[0])]
+    neo_data['avg_miss_distance_lunar'] = round(float(df['miss_distance_lunar'].mean()), 2)
+    df['miss_distance_astronomical'] = [float(df['miss_distance_astronomical'][i]['N']) for i in range(0, df.shape[0])]
+    neo_data['avg_miss_distance_astronomical'] = round(float(df['miss_distance_astronomical'].mean()), 2)
     
     return neo_data
 

@@ -1,3 +1,7 @@
+main {
+    display: none;
+}
+
 .dashboard {
     display: flex;
     flex-direction: column;
@@ -8,6 +12,7 @@
     display: flex;
     align-items: center;
     gap: 2vw;
+    margin: 3%;
 }
 
 .invalid-date-error {
@@ -25,9 +30,18 @@
     justify-content: space-between;
 }
 
-#summary-title {
+.summary-title {
     font-size: 2.8rem;
 }
+
+.summary-neo-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 
 #neo-count {
     display: flex;
@@ -37,10 +51,13 @@
     padding: 0;
 }
 
+/* Largest NEO Data */
+
 .largest-neo-info {
     display: grid;
-    width: 70%;
-    grid-template-columns: 25% 40% 25%;
+    justify-content: center;
+    width: 100%;
+    grid-template-columns: 20vw 25vw 20vw;
     grid-template-rows: 4rem 3rem 5rem;
     font-weight: bold;
     text-align: center;
@@ -60,7 +77,8 @@
 #largest-neo-title {
     grid-column-start: 1;
     grid-column-end: 4;
-    background-color: #1177fc5b;
+    color: #ffffff;
+    background-color: #00285c;
     border: 2px #1177fc5b;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -83,4 +101,84 @@
 
 #largest-neo-bottom-right {
     border-bottom-right-radius: 25px;
+}
+
+/* Avg Miss Distance Data */
+
+.neo-miss-distance {
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    grid-template-columns: 20vw 20vw;
+    grid-template-rows: 4rem 3rem 5rem;
+    font-weight: bold;
+    text-align: center;
+    gap: 0;
+    margin: 3% 0;
+}
+
+.neo-miss-distance * {
+    border: 1px solid #555555;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#neo-miss-distance-title {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    color: #ffffff;
+    background-color: #00285c;
+    border: 2px #1177fc5b;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.neo-miss-distance-label {
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.neo-miss-distance-label * {
+    border: 0;
+}
+
+.neo-miss-distance-data {
+    font-size: 1.6rem;
+}
+
+#neo-miss-distance-bottom-left {
+    border-bottom-left-radius: 25px;
+}
+
+#neo-miss-distance-bottom-right {
+    border-bottom-right-radius: 25px;
+}
+
+/* NEO Data Table */
+
+.neo-table {
+    border-collapse: collapse;
+    width: 70%;
+}
+
+.neo-table-headings {
+    color: #ffffff;
+    background-color: #423d46;
+    border: 1px solid #423d46;
+}
+
+.neo-table-headings th {
+    padding: 20px 0;
+}
+
+.neo-table-data {
+    padding: 20px 25px;
+    border: 1px solid #555555;
+    text-align: center;
 }
