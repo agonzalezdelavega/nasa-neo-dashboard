@@ -1,7 +1,6 @@
 resource "aws_cloudfront_distribution" "s3-distribution" {
   origin {
     domain_name = aws_s3_bucket.app.bucket_regional_domain_name
-    # origin_access_control_id = aws_cloudfront_origin_access_control.default.id
     origin_id = random_integer.origin_id.result
   }
 
@@ -9,11 +8,7 @@ resource "aws_cloudfront_distribution" "s3-distribution" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  logging_config {
-    include_cookies = false
-    bucket          = aws_s3_bucket.cloudfront-logging.bucket_domain_name
-    prefix          = local.prefix
-  }
+  aliases = ["www.${data.aws_route53_zone.zone.name}"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
@@ -28,7 +23,8 @@ resource "aws_cloudfront_distribution" "s3-distribution" {
   price_class = "PriceClass_100"
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = aws_acm_certificate.cert.arn
+    ssl_support_method = "sni-only"
   }
 
   restrictions {
@@ -62,25 +58,4 @@ resource "aws_cloudfront_cache_policy" "neo-cloudfront-cache-policy" {
       query_string_behavior = "none"
     }
   }
-}
-
-### Logging bucket
-resource "aws_s3_bucket" "cloudfront-logging" {
-  bucket = "${local.prefix}-cloudfront-logging-${random_integer.bucket_suffix.result}"
-}
-
-resource "aws_s3_bucket_ownership_controls" "cloudfront-logging" {
-  bucket = aws_s3_bucket.cloudfront-logging.id
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-resource "aws_s3_bucket_acl" "cloudfront-logging" {
-  bucket = aws_s3_bucket.cloudfront-logging.id
-  acl    = "private"
-
-  depends_on = [
-    aws_s3_bucket_ownership_controls.cloudfront-logging
-  ]
 }

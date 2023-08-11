@@ -1,6 +1,7 @@
 # Terraform
 **.terraform*
 **terraform*
+terraform.tfvars
 
 # Lambda
 lambda/layers/*/python
