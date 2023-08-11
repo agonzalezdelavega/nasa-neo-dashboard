@@ -66,6 +66,11 @@ resource "aws_s3_bucket_website_configuration" "website_config" {
 module "template_files" {
   source   = "hashicorp/dir/template"
   base_dir = "site/"
+
+  depends_on = [
+    aws_api_gateway_stage.api_deployment_stage
+  ]
+
 }
 
 resource "aws_s3_object" "app-objects" {
