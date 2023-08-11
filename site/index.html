@@ -28,12 +28,15 @@
             <a class="welcome-menu-button view-dashboard" href="dashboard.html?date=today">
                 <p>View Dashboard</p><span class="material-symbols-outlined">arrow_forward</span>
             </a>
+            <a class="welcome-menu-button" href="https://cneos.jpl.nasa.gov/" target="_blank">
+                <p>NASA NEO Website</p>
+            </a>
             <a class="welcome-menu-button" href="https://www.nasa.gov/planetarydefense/overview" target="_blank">
                 <p>NASA Planetary Defense Website</p>
             </a>
             <a class="welcome-menu-button" href="https://www.nasa.gov/planetarydefense/dart/dart-news" target="_blank">
-                <p>View Updates from DART</p>
-            </a>                
+                <p>NASA DART Mission</p>
+            </a>
         </div>
     </main>
 <script src="js/jquery.min.js"></script>
@@ -50,7 +53,7 @@
 <script type="text/javascript" src="js/apiGateway-js-sdk/apigClient.js"></script>
 <script type="text/javascript">
     currDate = new Date();
-    $('a').attr('href', `dashboard.html?date=${currDate.toISOString().slice(0, 10)}`)
+    $('.view-dashboard').attr('href', `dashboard.html?date=${currDate.toISOString().slice(0, 10)}`)
 </script>
 </body>
 </html>

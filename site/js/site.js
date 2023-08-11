@@ -6,12 +6,14 @@ $(document).ready(() => {
     const date = new Date(location.search.slice(6, 16));
 
     ////// VALIDATE DATE FORMAT //////
-    const date_iso = date.toISOString().slice(0, 10);
-    const isValidDate = date instanceof Date && !isNaN(date) && date_iso.split('-').length === 3;
+    const isValidDate = date instanceof Date && !isNaN(date) && location.search.length === 16;
     if (!isValidDate) {
         $('main').remove();
+        $('.loading').hide();
         $('body').append('<h1 class="invalid-date-error">Invalid date entered, please try again.</h1>');
     };
+
+    const date_iso = date.toISOString().slice(0, 10);
 
     ////// SET DATE INPUT //////
     $('.date-search input').attr('value', `${date_iso}`)

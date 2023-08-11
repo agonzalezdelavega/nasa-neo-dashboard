@@ -5,7 +5,6 @@
 # Lambda
 lambda/layers/*/python
 **lambda/*.zip
-**get-neo-data.zip
 
 # API SDK
 **apiGateway-js-sdk*

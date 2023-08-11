@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "nasa-neo" {
-  name           = "${local.prefix}-neos"
+  name           = "${local.prefix}-table"
   hash_key       = "neo_id"
   range_key      = "close_approach_date"
   billing_mode   = "PROVISIONED"
