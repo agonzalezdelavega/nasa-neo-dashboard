@@ -1,10 +1,10 @@
 data "aws_route53_zone" "zone" {
-  name = "${var.dns_zone_name}."
+  name = "${var.dns_zone_name}"
 }
 
 resource "aws_route53_record" "neo" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "www.${data.aws_route53_zone.zone.name}"
+  name    = "${local.domain_prefix}.${data.aws_route53_zone.zone.name}"
   type    = "A"
 
   alias {
@@ -15,7 +15,7 @@ resource "aws_route53_record" "neo" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "www.${data.aws_route53_zone.zone.name}"
+  domain_name       = "${local.domain_prefix}.${data.aws_route53_zone.zone.name}"
   validation_method = "DNS"
   lifecycle {
     create_before_destroy = true

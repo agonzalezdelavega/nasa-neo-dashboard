@@ -8,7 +8,7 @@ resource "aws_cloudfront_distribution" "s3-distribution" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  aliases = ["www.${data.aws_route53_zone.zone.name}"]
+  aliases = ["${local.domain_prefix}.${data.aws_route53_zone.zone.name}"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
@@ -25,6 +25,7 @@ resource "aws_cloudfront_distribution" "s3-distribution" {
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.cert.arn
     ssl_support_method = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   restrictions {
@@ -33,6 +34,19 @@ resource "aws_cloudfront_distribution" "s3-distribution" {
       locations        = []
     }
   }
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.cloudfront-logging.bucket_domain_name
+    prefix          = "${local.prefix}-cloudfront"
+  }
+
+  http_version = "http2and3"
+
+  depends_on = [ 
+    aws_s3_bucket.cloudfront-logging,
+    aws_acm_certificate.cert
+  ]
 
 }
 
@@ -57,5 +71,19 @@ resource "aws_cloudfront_cache_policy" "neo-cloudfront-cache-policy" {
     query_strings_config {
       query_string_behavior = "none"
     }
+  }
+}
+
+### Logging
+
+resource "aws_s3_bucket" "cloudfront-logging" {
+  bucket = "${local.prefix}-cloudfront-logs-${random_integer.bucket_suffix.result}"
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_ownership_controls" "cloudfront-logging" {
+  bucket = aws_s3_bucket.cloudfront-logging.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
   }
 }

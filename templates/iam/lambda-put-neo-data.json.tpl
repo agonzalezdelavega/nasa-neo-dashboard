@@ -16,14 +16,20 @@
                 "dynamodb:Query"
             ],
             "Resource": [
-                "arn:aws:dynamodb:${region}:${account_id}:table/${dynamodb_table}"
+                "${dynamodb_table}"
             ]
+        },
+        {
+			"Sid": "getKMSKey",
+			"Effect": "Allow",
+			"Action": "kms:Decrypt",
+			"Resource": "${kms_key_arn}"          
         },
         {
 			"Sid": "getAPIKey",
 			"Effect": "Allow",
-			"Action": "ssm:GetParameter",
-			"Resource": "arn:aws:ssm:${region}:${account_id}:parameter/${api_key_parameter_name}"
+			"Action": "secretsmanager:GetSecretValue",
+			"Resource": "${api_key_arn}"
 		},
         {
             "Sid": "writeLogs",

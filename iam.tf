@@ -29,14 +29,23 @@ resource "aws_iam_role_policy_attachment" "lambda-put-neo-data-role-attachment" 
   policy_arn = aws_iam_policy.lambda-put-neo-data-policy.arn
 }
 
+data "aws_kms_key" "api-kms-key" {
+  key_id = "alias/${var.api_key_kms_key}"
+}
+
+data "aws_secretsmanager_secret" "api-key" {
+  name = var.api_key_secretsmanager_name
+}
+
 data "template_file" "lambda-put-neo-data-role-policy" {
   template = file("./templates/iam/lambda-put-neo-data.json.tpl")
   vars = {
     region                 = data.aws_region.current.name,
     account_id             = data.aws_caller_identity.current.account_id,
     bucket_name            = aws_s3_bucket.app.id,
-    dynamodb_table         = aws_dynamodb_table.nasa-neo.name,
-    api_key_parameter_name = "nasa-api-key",
+    dynamodb_table         = aws_dynamodb_table.nasa-neo.arn,
+    kms_key_arn            = data.aws_kms_key.api-kms-key.arn,
+    api_key_arn            = data.aws_secretsmanager_secret.api-key.arn,
     log_group              = aws_cloudwatch_log_group.lambda-put-neo-data.name
   }
 }

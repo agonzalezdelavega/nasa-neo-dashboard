@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "app" {
   bucket = "${local.prefix}-${random_integer.bucket_suffix.result}"
+  force_destroy = true
 }
 
 resource "random_integer" "bucket_suffix" {

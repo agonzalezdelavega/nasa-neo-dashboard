@@ -5,6 +5,7 @@ import sys
 import os
 import time
 from datetime import datetime as dt
+import pandas as pd
 
 
 # ---- LOGGING CONFIGURATION --- #
@@ -22,7 +23,7 @@ logger.addHandler(ch)
 logger.info('Connecting to SDK')
 try:
     api_client = boto3.client('apigatewaymanagementapi', region_name='us-east-2')
-    ssm_client = boto3.client('ssm', region_name='us-east-2')
+    secretsmanager_client = boto3.client('secretsmanager', region_name='us-east-2')
     dynamodb_client = boto3.client('dynamodb', region_name='us-east-2')
 except:
     logger.error('Could not connect to AWS SDK')
@@ -30,7 +31,7 @@ except:
 # ---- GET NASA API CONNECTION PARAMETERS ---- #
 
 logger.info('Retriving API key from SSM')
-API_KEY = ssm_client.get_parameter(Name='nasa-api-key')
+API_KEY = secretsmanager_client.get_secret_value(SecretId=os.environ.get('API_KEY_SECRET_ID'))
 if API_KEY['ResponseMetadata']['HTTPStatusCode'] == 200:
     logger.info('API key received')
 else:
@@ -45,7 +46,7 @@ def handler(event, context):
     event['date'] = dt.today().strftime('%Y-%m-%d') if event['date'] == '' else event['date']
     
     params = {
-        'api_key': API_KEY['Parameter']['Value'],
+        'api_key': API_KEY['SecretString'],
         'start_date': event['date'],
         'end_date': event['date']
     }
@@ -60,6 +61,7 @@ def handler(event, context):
             
     data = response.json()['near_earth_objects']
 
+# ---- LOAD TABLE ROWS ---- #
     table_data = []
     for object in data[event['date']]:
         table_data.append({
@@ -71,6 +73,10 @@ def handler(event, context):
             'miss_distance_lunar': round(float(object['close_approach_data'][0]['miss_distance']['lunar']), 2),
             'miss_distance_astronomical': round(float(object['close_approach_data'][0]['miss_distance']['astronomical']), 2)
         })
+        
+# ---- GET DATA ON LARGEST ESTIMATED DIAMETER ---- #
+    df = pd.DataFrame(table_data)
+    largest_neo = df['neo_id'].iloc[[df['estimated_diameter_feet_max'].idxmax()]]
     
 # ---- UPLOAD DATA TO DYNAMODB ---- #
     for date in data.keys():    
@@ -103,10 +109,14 @@ def handler(event, context):
                     },
                     'uploaded_on': {
                         'N': str(time.time() + (24 * 60 * 60))
+                    },
+                    'largest_neo': {
+                        'BOOL': True if object['neo_id'] == largest_neo.values[0] else False
                     }
                 }
             }
         } for object in table_data]
+        
         put_data = dynamodb_client.batch_write_item(
             RequestItems = {os.environ.get('DYNAMO_DB_TABLE_NAME'): put_operations}
         )
