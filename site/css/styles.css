@@ -1,7 +1,7 @@
 :root {
     background-color: #efefff;
     color: #000000;
-    font-family: sans-serif;
+    font-family: Trebuchet MS, sans-serif;
 }
 
 nav {
@@ -11,7 +11,7 @@ nav {
     color: #ffffff;
     background-color: #2d2a4b;;
     width: 100%;
-    padding: 1rem 0 1.8rem 0;
+    padding: 8px 0;
     gap: 2vw;
 }
 
@@ -59,7 +59,7 @@ main {
     font-size: 12px;
     font-weight: bold;
     margin-top: 20px;
-    padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+    padding: 2px;
     min-width: 12%;
     max-width: 20%;
     border-radius: 10px;
@@ -70,7 +70,7 @@ main {
 
 .view-dashboard {
     font-size: 15px;
-    padding: 1.1rem;
+    padding: 5px;
     background-color: #002d81;
     justify-content: space-evenly;
 }
