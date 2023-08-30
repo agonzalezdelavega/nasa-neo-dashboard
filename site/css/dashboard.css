@@ -8,6 +8,40 @@ main {
     align-items: center;
 }
 
+/* Loading animation and loading error message */
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    animation: rotate 1s linear infinite
+}
+.loader::before , .loader::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 5px solid #00d9ff;
+    animation: prixClipFix 2s linear infinite ;
+}
+.loader::after{
+    transform: rotate3d(90, 90, 0, 180deg );
+    border-color: #006eff;
+}
+
+@keyframes rotate {
+    0%   {transform: rotate(0deg)}
+    100%   {transform: rotate(360deg)}
+}
+
+@keyframes prixClipFix {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    75%, 100%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+}
+
 .loading, .dashboard-error {
     display: flex;
     align-items: center;
@@ -18,6 +52,8 @@ main {
 .invalid-date-error {
     margin: 5%;
 }
+
+/* Dashboard Summary Section */
 
 .summary {
     width: 90%;
@@ -41,7 +77,6 @@ main {
     justify-content: center;
     text-align: center;
 }
-
 
 #neo-count {
     display: flex;
