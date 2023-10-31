@@ -1,8 +1,5 @@
 # Hosting a Dashboard Application on S3
 
-## Website Link
-https://neo.agonzalezdelavega.com/
-
 ## Description
 NASA's [Center for Near Earth Object Studies](https://cneos.jpl.nasa.gov/) maintains a dataset on all asteroids in Earth's proximity. Using [NASA's API](https://api.nasa.gov/), anyone can access data on nearby asteroids on a given date. The website outlined below runs on S3 to extract data from this API and create daily NEO dashbaord.
 
