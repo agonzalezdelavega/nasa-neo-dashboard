@@ -22,9 +22,9 @@ logger.addHandler(ch)
 
 logger.info('Connecting to SDK')
 try:
-    api_client = boto3.client('apigatewaymanagementapi', region_name='us-east-2')
-    secretsmanager_client = boto3.client('secretsmanager', region_name='us-east-2')
-    dynamodb_client = boto3.client('dynamodb', region_name='us-east-2')
+    api_client = boto3.client('apigatewaymanagementapi', region_name=os.environ.get('REGION'))
+    secretsmanager_client = boto3.client('secretsmanager', region_name=os.environ.get('REGION'))
+    dynamodb_client = boto3.client('dynamodb', region_name=os.environ.get('REGION'))
 except:
     logger.error('Could not connect to AWS SDK')
 

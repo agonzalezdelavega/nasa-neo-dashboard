@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "eu-south-2"
 }
 
 provider "aws" {
@@ -24,9 +24,5 @@ variable "dns_zone_name" {
 
 # Secret Name for Lambda to retreive NASA API key
 variable "api_key_secretsmanager_name" {
-  type = string
-}
-
-variable "api_key_kms_key" {
   type = string
 }

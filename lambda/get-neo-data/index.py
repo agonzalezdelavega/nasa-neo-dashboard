@@ -5,7 +5,7 @@ import logging
 import sys
 from datetime import datetime as dt
 import pandas as pd
-
+        
 
 # ---- LOGGING CONFIGURATION --- #
 
@@ -21,8 +21,8 @@ logger.addHandler(ch)
 
 logger.info('Connecting to SDK')
 try:
-    dynamodb_client = boto3.client('dynamodb', region_name='us-east-2')
-    lambda_client = boto3.client('lambda', region_name='us-east-2')
+    dynamodb_client = boto3.client('dynamodb', region_name=os.environ.get('REGION'))
+    lambda_client = boto3.client('lambda', region_name=os.environ.get('REGION'))
 except:
     logger.error('Could not connect to AWS SDK')
 

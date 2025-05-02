@@ -9,3 +9,6 @@ lambda/layers/*/python
 
 # API SDK
 **apiGateway-js-sdk*
+
+# venv
+**venv

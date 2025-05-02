@@ -16,6 +16,7 @@ resource "aws_lambda_function" "put-neo-data" {
     variables = {
       API_KEY_SECRET_ID    = var.api_key_secretsmanager_name
       DYNAMO_DB_TABLE_NAME = aws_dynamodb_table.nasa-neo.name
+      REGION               = data.aws_region.current.name
     }
   }
 }
@@ -45,6 +46,7 @@ resource "aws_lambda_function" "get-neo-data" {
       DYNAMO_DB_TABLE_NAME   = aws_dynamodb_table.nasa-neo.name,
       GLOBAL_SECONDARY_INDEX = local.global_secondary_index,
       LAMBDA_FUNCTION_PUT    = aws_lambda_function.put-neo-data.function_name
+      REGION                 = data.  aws_region.current.name
     }
   }
 }
