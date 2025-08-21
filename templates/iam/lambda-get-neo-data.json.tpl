@@ -8,7 +8,7 @@
                 "dynamodb:Query"
             ],
             "Resource": [
-                "arn:aws:dynamodb:${region}:${account_id}:table/${dynamodb_table}/index/*"
+                "${dynamodb_table}/index/*"
             ]
         },
         {

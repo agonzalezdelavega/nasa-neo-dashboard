@@ -1,5 +1,5 @@
 data "aws_route53_zone" "zone" {
-  name = "${var.dns_zone_name}"
+  name = var.dns_zone_name
 }
 
 resource "aws_route53_record" "neo" {
@@ -30,11 +30,11 @@ resource "aws_route53_record" "cert_validation" {
   type            = tolist(aws_acm_certificate.cert.domain_validation_options)[0].resource_record_type
   ttl             = 60
   zone_id         = data.aws_route53_zone.zone.zone_id
-  provider = aws.us-east-1
+  provider        = aws.us-east-1
 }
 
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [aws_route53_record.cert_validation.fqdn]
-  provider = aws.us-east-1
+  provider                = aws.us-east-1
 }

@@ -1,15 +1,18 @@
+data "aws_ecr_repository" "put_neo_data" {
+  name = "put_neo_data"
+}
+
+data "aws_ecr_repository" "get_neo_data" {
+  name = "get_neo_data"
+}
+
 ### Put NEO data
 
 resource "aws_lambda_function" "put-neo-data" {
-  filename      = data.archive_file.put-neo-data-function-code.output_path
   function_name = "${local.prefix}-put-neo-data"
-  role          = aws_iam_role.lambda-put-neo-data.arn
-  handler       = "index.handler"
-  runtime       = "python3.9"
-  layers        = [
-    aws_lambda_layer_version.pandas.arn,
-    aws_lambda_layer_version.put-neo-data-requests.arn
-  ]
+  role          = module.iam.put_function_iam_role
+  package_type  = "Image"
+  image_uri     = "${data.aws_ecr_repository.put_neo_data.repository_url}:latest"
   timeout       = 10
 
   environment {
@@ -21,23 +24,23 @@ resource "aws_lambda_function" "put-neo-data" {
   }
 }
 
-data "archive_file" "put-neo-data-function-code" {
-  type        = "zip"
-  source_file = "./lambda/put-neo-data/index.py"
-  output_path = "./lambda/put-neo-data.zip"
+### Permissions to invoke Put NEO Function from Get NEO Function
+
+resource "aws_lambda_permission" "put_neo_invoke" {
+  statement_id  = "AllowLambdaInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.put-neo-data.function_name
+  principal     = "lambda.amazonaws.com"
+  source_arn    = aws_lambda_function.get-neo-data.arn
 }
 
 ### Get NEO data
 
 resource "aws_lambda_function" "get-neo-data" {
-  filename      = data.archive_file.get-neo-data-function-code.output_path
   function_name = "${local.prefix}-get-neo-data"
-  role          = aws_iam_role.lambda-get-neo-data.arn
-  handler       = "index.handler"
-  runtime       = "python3.9"
-  layers        = [
-    aws_lambda_layer_version.pandas.arn
-  ]
+  role          = module.iam.get_function_iam_role
+  package_type  = "Image"
+  image_uri     = "${data.aws_ecr_repository.get_neo_data.repository_url}:latest"
   timeout       = 10
 
   environment {
@@ -46,27 +49,7 @@ resource "aws_lambda_function" "get-neo-data" {
       DYNAMO_DB_TABLE_NAME   = aws_dynamodb_table.nasa-neo.name,
       GLOBAL_SECONDARY_INDEX = local.global_secondary_index,
       LAMBDA_FUNCTION_PUT    = aws_lambda_function.put-neo-data.function_name
-      REGION                 = data.  aws_region.current.name
+      REGION                 = data.aws_region.current.name
     }
   }
-}
-
-data "archive_file" "get-neo-data-function-code" {
-  type        = "zip"
-  source_file = "./lambda/get-neo-data/index.py"
-  output_path = "./lambda/get-neo-data.zip"
-}
-
-### Layers
-
-resource "aws_lambda_layer_version" "pandas" {
-  filename            = "./lambda/layers/common/pandas-layer.zip"
-  layer_name          = "pandas-layer"
-  compatible_runtimes = ["python3.9"]
-}
-
-resource "aws_lambda_layer_version" "put-neo-data-requests" {
-  filename            = "./lambda/layers/put-neo-data/put-neo-data.zip"
-  layer_name          = "put-neo-data"
-  compatible_runtimes = ["python3.9"]
 }

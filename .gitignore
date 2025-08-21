@@ -12,3 +12,6 @@ lambda/layers/*/python
 
 # venv
 **venv
+
+#Testing scripts
+testing-scripts

@@ -228,7 +228,8 @@ resource "aws_api_gateway_stage" "api_deployment_stage" {
     command     = <<-EOF
 aws apigateway get-sdk --rest-api-id ${aws_api_gateway_rest_api.api.id} \
   --stage-name ${aws_api_gateway_stage.api_deployment_stage.stage_name} \
-  --sdk-type javascript apiGateway-js-sdk.zip && \
+  --sdk-type javascript apiGateway-js-sdk.zip \
+  --region ${data.aws_region.current.name} && \
   unzip -o apiGateway-js-sdk.zip -d js/
 EOF
   }
