@@ -37,22 +37,23 @@
         <div class="neo-miss-distance-label"><span class="material-symbols-outlined">sunny</span><p>Astronomical Units</p><p title="One astronomical unit is equal to the distance from the Earth to the Sun, or 149,597,870.7 kilometers.">&#9432;</p></div>
         <div class="neo-miss-distance-label"><span class="material-symbols-outlined">dark_mode</span><p>Lunar Distance</p><p title="One lunar distance unit is equal to the distance from the center of the Earth to the center of the Moon, or 384,399 kilometers.">&#9432;</p></div>
     </div>
+    <div class="center container-md">
+        <table class="table table-striped table-hover">
+            <thead class="--bs-tertiary-color">
+                <tr>
+                    <th scope="col">NEO ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Estimated Diameter Range (m)</th>
+                    <th scope="col">Miss Distance (AU)</th>
+                    <th scope="col">Miss Distance (LD)</th>
+                    <th scope="col">Relative Velocity (KPH)</th>
+                </tr>
+            </thead>
+            <tbody id="neo-table-body">
 
-    <table class="neo-table">
-        <thead>
-            <tr class="neo-table-headings">
-                <th scope="col">NEO ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Estimated Diameter Range<br>(m)</th>
-                <th scope="col">Miss Distance<br>(AU)</th>
-                <th scope="col">Miss Distance<br>(LD)</th>
-                <th scope="col">Relative Velocity<br>(KPH)</th>
-            </tr>
-        </thead>
-        <tbody id="neo-table-body">
-
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
     </div>
 </main>
 <script src="js/jquery.min.js"></script>
