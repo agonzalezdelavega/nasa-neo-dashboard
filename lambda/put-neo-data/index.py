@@ -67,16 +67,16 @@ def handler(event, context):
         table_data.append({
             'neo_id': object['id'],
             'name': object['name'],
-            'estimated_diameter_feet_max': round(object['estimated_diameter']['feet']['estimated_diameter_max'], 2),
-            'estimated_diameter_feet_min': round(object['estimated_diameter']['feet']['estimated_diameter_min'], 2),
-            'relative_velocity_mph':round(float(object['close_approach_data'][0]['relative_velocity']['miles_per_hour']), 2),
+            'estimated_diameter_meters_max': round(object['estimated_diameter']['meters']['estimated_diameter_max'], 2),
+            'estimated_diameter_meters_min': round(object['estimated_diameter']['meters']['estimated_diameter_min'], 2),
+            'relative_velocity_kph':round(float(object['close_approach_data'][0]['relative_velocity']['kilometers_per_hour']), 2),
             'miss_distance_lunar': round(float(object['close_approach_data'][0]['miss_distance']['lunar']), 2),
             'miss_distance_astronomical': round(float(object['close_approach_data'][0]['miss_distance']['astronomical']), 2)
         })
         
 # ---- GET DATA ON LARGEST ESTIMATED DIAMETER ---- #
     df = pd.DataFrame(table_data)
-    largest_neo = df['neo_id'].iloc[[df['estimated_diameter_feet_max'].idxmax()]]
+    largest_neo = df['neo_id'].iloc[[df['estimated_diameter_meters_max'].idxmax()]]
     
 # ---- UPLOAD DATA TO DYNAMODB ---- #
     for date in data.keys():    
@@ -92,14 +92,14 @@ def handler(event, context):
                     'name': {
                         'S': object['name']
                     },
-                    'estimated_diameter_feet_max': {
-                        'N': str(object['estimated_diameter_feet_max'])
+                    'estimated_diameter_meters_max': {
+                        'N': str(object['estimated_diameter_meters_max'])
                     },
-                    'estimated_diameter_feet_min': {
-                        'N': str(object['estimated_diameter_feet_min'])
+                    'estimated_diameter_meters_min': {
+                        'N': str(object['estimated_diameter_meters_min'])
                     },
-                    'relative_velocity_mph': {
-                        'N': str(object['relative_velocity_mph'])
+                    'relative_velocity_kph': {
+                        'N': str(object['relative_velocity_kph'])
                     },
                     'miss_distance_lunar': {
                         'N': str(object['miss_distance_lunar'])

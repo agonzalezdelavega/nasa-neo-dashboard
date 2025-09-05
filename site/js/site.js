@@ -1,4 +1,4 @@
-$(document).ready(() => {
+$(() => {
     ////// LOAD SDK //////
     var apigClient = apigClientFactory.newClient();
 
@@ -48,10 +48,10 @@ $(document).ready(() => {
                     $('#neo-table-body').append(`<tr class="neo-table-row ${neo.neo_id.N}">`);
                     $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.neo_id.N}</td>`);
                     $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.name.S}</td>`);
-                    $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.estimated_diameter_feet_min.N} - ${neo.estimated_diameter_feet_max.N}</td>`);
+                    $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.estimated_diameter_meters_min.N} - ${neo.estimated_diameter_meters_max.N}</td>`);
                     $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.miss_distance_astronomical.N}</td>`);
                     $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.miss_distance_lunar.N}</td>`);
-                    $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.relative_velocity_mph.N}</td>`);
+                    $(`.${neo.neo_id.N}`).append(`<td class="neo-table-data">${neo.relative_velocity_kph.N}</td>`);
                     $('#neo-table-body').append('</tr>');
     
                     // Get data on Largest NEO
@@ -60,8 +60,8 @@ $(document).ready(() => {
                         $('.largest-neo-info').append('<p class="largest-neo-label">Estimated Max Diameter</p>');
                         $('.largest-neo-info').append('<p class="largest-neo-label">Relative Velocity</p>');
                         $('.largest-neo-info').append(`<p class="largest-neo-data" id="largest-neo-bottom-left">${neo.name.S}</td>`);
-                        $('.largest-neo-info').append(`<p class="largest-neo-data">${neo.estimated_diameter_feet_max.N}ft</td>`);
-                        $('.largest-neo-info').append(`<p class="largest-neo-data" id="largest-neo-bottom-right">${neo.relative_velocity_mph.N}mph</td>`);
+                        $('.largest-neo-info').append(`<p class="largest-neo-data">${neo.estimated_diameter_meters_max.N}m</td>`);
+                        $('.largest-neo-info').append(`<p class="largest-neo-data" id="largest-neo-bottom-right">${neo.relative_velocity_kph.N}kph</td>`);
                     };
                 })
             } catch(error) {
